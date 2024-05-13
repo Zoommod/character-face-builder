@@ -3,6 +3,8 @@
 
 const float PI = 3.1416f;
 
+int olhos = 0;
+
 // Draw half sphere for the R2-D2's head
 void drawR2D2Head() {
     glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
@@ -18,12 +20,15 @@ void drawR2D2Head() {
 }
 
 void drawR2D2Eye() {
-    glColor3f(0.0f, 0.0f, 0.0f); // Cor do olho do R2-D2 (Preto)
-  
-    glPushMatrix();
-    glTranslatef(0.0f, 0.75f, 0.4f); // Posição do olho em relação à cabeça
-    glutSolidSphere(0.08, 50, 50); // Desenha a esfera do olho
-    glPopMatrix();
+    switch (olhos){
+    case 0:
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor do olho do R2-D2 (Preto)
+        glPushMatrix();
+        glTranslatef(0.0f, 0.75f, 0.4f); // Posição do olho em relação à cabeça
+        glutSolidSphere(0.08, 50, 50); // Desenha a esfera do olho
+        glPopMatrix();
+        break;
+    }
 }
 
 void drawR2D2BodyDetail(GLUquadric* quad) {
@@ -253,6 +258,25 @@ void display() {
     glutSwapBuffers();
 }
 
+// Função callback de teclado
+void keyboard(unsigned char key, int x, int y) {
+    char keys[] = {'1', '2', '3', '4', '5', '6', 'q', 'w', 'e', 'r', 't', 'y', 'a', 's', 'd', 'f', 'g', 'h', 'z', 'x', 'c', 'v', 'b', 'n'};
+    int* indices[] = {&olhos, &olhos, &olhos, &olhos, &olhos, &olhos};
+
+    for (int i = 0; i < sizeof(keys)/sizeof(char); i++) {
+        if (key == keys[i]) {
+            *indices[i] = i % 6;
+            break;
+        }
+    }
+
+    if (key == 27) { // Tecla ESC para sair
+        exit(0);
+    }
+
+    glutPostRedisplay();
+}
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -264,6 +288,7 @@ int main(int argc, char** argv) {
     glMatrixMode(GL_MODELVIEW);
 
     glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
     glutMainLoop();
     return 0;
 }
