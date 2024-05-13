@@ -3,18 +3,18 @@
 
 const float PI = 3.1416f;
 
-
+// Draw half sphere for the R2-D2's head
 void drawR2D2Head() {
-    glColor3f(0.8f, 0.8f, 0.8f); // Cor da cabeça do R2-D2 (Cinza claro)
+    glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
   
-    
-    GLdouble eqn[4] = {0.0, -1.0, 0.0, 0.0}; 
+    // Enable clipping plane to cut the sphere in half
+    GLdouble eqn[4] = {0.0, -1.0, 0.0, 0.0}; // Plane equation to clip lower half
     glClipPlane(GL_CLIP_PLANE0, eqn);
     glEnable(GL_CLIP_PLANE0);
   
-    glutSolidSphere(0.5, 100, 100); 
+    glutSolidSphere(0.5, 100, 100); // Draw half sphere
   
-    glDisable(GL_CLIP_PLANE0); 
+    glDisable(GL_CLIP_PLANE0); // Disable clipping plane
 }
 
 void drawR2D2Eye() {
@@ -26,45 +26,147 @@ void drawR2D2Eye() {
     glPopMatrix();
 }
 
+void drawR2D2BodyDetail(GLUquadric* quad) {
+    // Desenha um painel retangular
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul
+    glBegin(GL_QUADS);
+    glVertex3f(-0.2f, 0.2f, 0.01f); // Canto superior esquerdo
+    glVertex3f(0.2f, 0.2f, 0.01f);  // Canto superior direito
+    glVertex3f(0.2f, -0.2f, 0.01f); // Canto inferior direito
+    glVertex3f(-0.2f, -0.2f, 0.01f); // Canto inferior esquerdo
+    glEnd();
+}
+
 void drawR2D2Body() {    
     GLUquadric* quad = gluNewQuadric();
-    glColor3f(0.3f, 0.3f, 0.8f); // Cor do corpo do R2-D2 (Azul)
- 
+    glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 (Azul)
+
     glPushMatrix();
     glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotaciona o cilindro em torno do eixo X
-    gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Draw cylinder
+    gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Desenha o cilindro
+    drawR2D2BodyDetail(quad); // Chama a função para desenhar os detalhes
     glPopMatrix();
-    
+
+    // Desenha o retângulo maior no X e menor no Y
+    glPushMatrix();
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o retângulo
+    glBegin(GL_QUADS);
+    glVertex3f(-0.2f, 0.46f, 0.0f); // Canto inferior esquerdo
+    glVertex3f(0.2f, 0.46f, 0.0f);  // Canto inferior direito
+    glVertex3f(0.2f, 0.5f, 0.0f);   // Canto superior direito
+    glVertex3f(-0.2f, 0.5f, 0.0f);  // Canto superior esquerdo
+    glEnd();
+
+    // Desenha o losango na ponta esquerda do retângulo
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o losango
+    glBegin(GL_POLYGON);
+    glVertex3f(-0.2f, 0.485f, 0.0f);  // Centro direito do losango (conectado ao retângulo)
+    glVertex3f(-0.22f, 0.44f, 0.0f); // Canto inferior do losango
+    glVertex3f(-0.24f, 0.485f, 0.0f);  // Centro esquerdo do losango
+    glVertex3f(-0.22f, 0.52f, 0.0f);  // Canto superior do losango
+    glEnd();
+    glPopMatrix();
+
+    // Desenha o retângulo abaixo do anterior
+    glPushMatrix();
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o retângulo
+    glBegin(GL_QUADS);
+    glVertex3f(-0.2f, 0.4f, 0.0f); // Canto inferior esquerdo (ajustado para baixo)
+    glVertex3f(0.2f, 0.4f, 0.0f);  // Canto inferior direito (ajustado para baixo)
+    glVertex3f(0.2f, 0.44f, 0.0f);  // Canto superior direito (ajustado para baixo)
+    glVertex3f(-0.2f, 0.44f, 0.0f); // Canto superior esquerdo (ajustado para baixo)
+    glEnd();
+
+    // Desenha o losango na ponta direita do retângulo
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o losango
+    glBegin(GL_POLYGON);
+    glVertex3f(0.2f, 0.423f, 0.0f);  // Centro esquerdo do losango (conectado ao retângulo)
+    glVertex3f(0.22f, 0.38f, 0.0f); // Canto inferior do losango
+    glVertex3f(0.24f, 0.423f, 0.0f);  // Centro direito do losango
+    glVertex3f(0.22f, 0.46f, 0.0f);  // Canto superior do losango
+    glEnd();
+    glPopMatrix();
+
+
+    // Desenha detalhe do retangular esquerdo
+    glPushMatrix();
+    glColor3f(0.5f, 0.5f, 0.5f); // Definindo a cor para cinza
+    glBegin(GL_LINE_LOOP);  // Inicia o desenho da linha
+    glVertex3f(-0.44f, -0.2f, 0.0f);  // Canto inferior direito espelhado
+    glVertex3f(-0.25f, -0.2f, 0.0f);  // Canto inferior esquerdo espelhado
+    glVertex3f(-0.25f, 0.5f, 0.0f);   // Canto superior esquerdo espelhado
+    glVertex3f(-0.44f, 0.5f, 0.0f);   // Canto superior direito espelhado
+    glEnd();  // Termina o desenho da linha
+    glPopMatrix();
+
+    // Desenha detalhe do retangular interno esquerdo
+    glPushMatrix();
+    glColor3f(0.3f, 0.3f, 0.3f); // Definindo uma cor mais escura para o retângulo interno
+    glBegin(GL_QUADS);  // Inicia o desenho do retângulo
+    glVertex3f(-0.42f, -0.18f, 0.01f);  // Canto inferior direito interno
+    glVertex3f(-0.27f, -0.18f, 0.01f);  // Canto inferior esquerdo interno
+    glVertex3f(-0.27f, 0.48f, 0.01f);   // Canto superior esquerdo interno
+    glVertex3f(-0.42f, 0.48f, 0.01f);   // Canto superior direito interno
+    glEnd();  // Termina o desenho do retângulo
+    glPopMatrix();
+
+
+    // Desenha detalhe do retangular direito
+    glPushMatrix();
+    glColor3f(0.5f, 0.5f, 0.5f); // Definindo a cor para cinza
+    glBegin(GL_LINE_LOOP);  // Inicia o desenho da linha
+    glVertex3f(0.25f, -0.2f, 0.0f);  // Canto inferior esquerdo
+    glVertex3f(0.44f, -0.2f, 0.0f);   // Canto inferior direito
+    glVertex3f(0.44f, 0.5f, 0.0f);    // Canto superior direito
+    glVertex3f(0.25f, 0.5f, 0.0f);   // Canto superior esquerdo
+    glEnd();  // Termina o desenho da linha
+    glPopMatrix();
+
+    // Desenha detalhe do retangular interno direito
+    glPushMatrix();
+    glColor3f(0.3f, 0.3f, 0.3f); // Definindo uma cor mais escura para o retângulo interno
+    glBegin(GL_QUADS);  // Inicia o desenho do retângulo
+    glVertex3f(0.27f, -0.18f, 0.01f);  // Canto inferior esquerdo interno
+    glVertex3f(0.42f, -0.18f, 0.01f);  // Canto inferior direito interno
+    glVertex3f(0.42f, 0.48f, 0.01f);   // Canto superior direito interno
+    glVertex3f(0.27f, 0.48f, 0.01f);   // Canto superior esquerdo interno
+    glEnd();  // Termina o desenho do retângulo
+    glPopMatrix();
+
+
     gluDeleteQuadric(quad);
 }
+
+
 void drawR2D2Arm() {
     GLUquadric* quad = gluNewQuadric();
-    glColor3f(0.3f, 0.3f, 0.8f); // Azul
+    glColor3f(0.8f, 0.8f, 0.8f); // Azul
 
     // Desenha o braço
     glPushMatrix();
-    glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotaciona segundo o eixo X
-    gluCylinder(quad, 0.11f, 0.11f, 1.21f, 20, 20); // Desenha um cilindro
+    glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+    gluCylinder(quad, 0.13f, 0.13f, 1.21f, 20, 20);
     glPopMatrix();
 
-    // Desenha o trapézio para simular a mão
+    // Desenha o trapézio invertido ajustado
     glPushMatrix();
-    glTranslatef(0.0f, -1.25f, 0.6f); // Move para a extremidade do cilindro
+    glTranslatef(0.01f, -1.46f, 0.6f); // Ajusta a posição para alinhar com o final do braço
     glBegin(GL_QUADS);
-    glVertex3f(-0.1f, 0.1f, 0.0f); // Vértice superior esquerdo
-    glVertex3f(0.17f, 0.1f, 0.0f);  // Vértice superior direito
-    glVertex3f(0.15f, -0.1f, 0.0f); // Vértice inferior direito
-    glVertex3f(-0.15f, -0.1f, 0.0f); // Vértice inferior esquerdo
+    // Coordenadas ajustadas do trapézio
+    glVertex3f(-0.19f, 0.3f, -0.1f); // Esticado para a esquerda
+    glVertex3f(0.19f, 0.3f, -0.1f);  // Esticado para a direita
+    glVertex3f(0.4f, 0.1f, 0.0f);
+    glVertex3f(-0.4f, 0.1f, 0.0f);
     glEnd();
     glPopMatrix();
 
     gluDeleteQuadric(quad);
 }
 
-
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     glLoadIdentity();
 
     gluLookAt(0.0, 0.0, 5.0,  // posição da câmera
@@ -82,15 +184,16 @@ void display() {
     drawR2D2Body();
     drawR2D2Eye();
 
-    glPushMatrix();
-    glTranslatef(0.8f, 0.6f, -0.9f); // Posição do braço direito
-    drawR2D2Arm();
-    glPopMatrix();
-
     // Desenhar braço esquerdo
     glPushMatrix();
     glTranslatef(-0.8f, 0.6f, -0.9f); // Posição do braço esquerdo
-    drawR2D2Arm();
+    //drawR2D2Arm(); // Especificar que é o braço esquerdo
+    glPopMatrix();
+
+    // Desenhar braço direito
+    glPushMatrix();
+    glTranslatef(0.8f, 0.6f, -0.9f); // Posição do braço direito
+    drawR2D2Arm(); // Especificar que é o braço direito 
     glPopMatrix();
 
     glutSwapBuffers();
