@@ -187,7 +187,7 @@ void display() {
     // Desenhar braço esquerdo
     glPushMatrix();
     glTranslatef(-0.8f, 0.6f, -0.9f); // Posição do braço esquerdo
-    //drawR2D2Arm(); // Especificar que é o braço esquerdo
+    drawR2D2Arm(); // Especificar que é o braço esquerdo
     glPopMatrix();
 
     // Desenhar braço direito
