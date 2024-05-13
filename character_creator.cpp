@@ -88,7 +88,61 @@ void drawR2D2Body() {
     glEnd();
     glPopMatrix();
 
+        // Desenha um novo retângulo abaixo com espaço e dimensões ajustadas
+    glPushMatrix();
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o retângulo
+    glBegin(GL_QUADS);
+    glVertex3f(-0.15f, -0.3f, 0.0f); // Canto inferior esquerdo (mais para cima e para dentro)
+    glVertex3f(0.15f, -0.3f, 0.0f);  // Canto inferior direito (mais para cima e para dentro)
+    glVertex3f(0.15f, 0.34f, 0.0f);  // Canto superior direito (mais para cima e para dentro)
+    glVertex3f(-0.15f, 0.34f, 0.0f); // Canto superior esquerdo (mais para cima e para dentro)
+    glEnd();
+    glPopMatrix();
 
+    glPushMatrix();
+    // Desenha o círculo inferior e os traços do jogo da velha
+    glPushMatrix();
+    glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza para os círculos
+    glTranslatef(0.0f, -0.1f, 0.0f); // Posiciona o círculo inferior
+    gluDisk(quad, 0.0f, 0.1f, 30, 1); // Desenha o círculo inferior
+
+    // Traços do jogo da velha centralizados para o círculo inferior
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para os traços
+    glBegin(GL_LINES);
+    glVertex3f(-0.05f, 0.0f, 0.01f); // Linha horizontal inferior
+    glVertex3f(0.05f, 0.0f, 0.01f);
+    glVertex3f(-0.05f, 0.05f, 0.01f); // Linha horizontal superior
+    glVertex3f(0.05f, 0.05f, 0.01f);
+
+    glVertex3f(0.0f, -0.05f, 0.01f); // Linha vertical esquerda
+    glVertex3f(0.0f, 0.05f, 0.01f);
+    glVertex3f(0.05f, -0.05f, 0.01f); // Linha vertical direita
+    glVertex3f(0.05f, 0.05f, 0.01f);
+    glEnd();
+
+    glPopMatrix();
+    // Desenha o círculo superior e os traços do jogo da velha
+    glPushMatrix();
+    glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza para os círculos
+    glTranslatef(0.0f, 0.15f, 0.0f); // Posiciona o círculo superior
+    gluDisk(quad, 0.0f, 0.1f, 30, 1); // Desenha o círculo superior
+
+    // Traços do jogo da velha centralizados para o círculo superior
+    glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para os traços
+    glBegin(GL_LINES);
+    glVertex3f(-0.05f, 0.0f, 0.01f); // Linha horizontal inferior
+    glVertex3f(0.05f, 0.0f, 0.01f);
+    glVertex3f(-0.05f, 0.05f, 0.01f); // Linha horizontal superior
+    glVertex3f(0.05f, 0.05f, 0.01f);
+
+    glVertex3f(0.0f, -0.05f, 0.01f); // Linha vertical esquerda
+    glVertex3f(0.0f, 0.05f, 0.01f);
+    glVertex3f(0.05f, -0.05f, 0.01f); // Linha vertical direita
+    glVertex3f(0.05f, 0.05f, 0.01f);
+    glEnd();
+    glPopMatrix();
+    glPopMatrix();
+ 
     // Desenha detalhe do retangular esquerdo
     glPushMatrix();
     glColor3f(0.5f, 0.5f, 0.5f); // Definindo a cor para cinza
@@ -102,7 +156,7 @@ void drawR2D2Body() {
 
     // Desenha detalhe do retangular interno esquerdo
     glPushMatrix();
-    glColor3f(0.3f, 0.3f, 0.3f); // Definindo uma cor mais escura para o retângulo interno
+    glColor3f(0.0f, 0.0f, 0.5f); // Definindo a cor azul
     glBegin(GL_QUADS);  // Inicia o desenho do retângulo
     glVertex3f(-0.42f, -0.18f, 0.01f);  // Canto inferior direito interno
     glVertex3f(-0.27f, -0.18f, 0.01f);  // Canto inferior esquerdo interno
@@ -125,7 +179,7 @@ void drawR2D2Body() {
 
     // Desenha detalhe do retangular interno direito
     glPushMatrix();
-    glColor3f(0.3f, 0.3f, 0.3f); // Definindo uma cor mais escura para o retângulo interno
+    glColor3f(0.0f, 0.0f, 0.5f); // Definindo a cor azul
     glBegin(GL_QUADS);  // Inicia o desenho do retângulo
     glVertex3f(0.27f, -0.18f, 0.01f);  // Canto inferior esquerdo interno
     glVertex3f(0.42f, -0.18f, 0.01f);  // Canto inferior direito interno
