@@ -33,7 +33,71 @@ void drawR2D2Head() {
         glEnable(GL_CLIP_PLANE0);
         glutSolidSphere(0.5, 100, 100); // Draw half sphere
         glDisable(GL_CLIP_PLANE0); // Disable clipping plane
+
+        // Desenhar o chapéu de Papai Noel
+        glColor3f(1.0f, 0.0f, 0.0f); // Cor vermelha
+        glBegin(GL_TRIANGLES);
+        glVertex2f(0.0f, -1.2f); // Vértice inferior
+        glVertex2f(-0.2f, -0.6f); // Vértice superior esquerdo
+        glVertex2f(0.2f, -0.6f); // Vértice superior direito
+        glEnd();
+        glColor3f(1.0f, 1.0f, 1.0f); // Cor branca
+        glBegin(GL_QUADS);
+        glVertex2f(0.2f, -0.6f); // Vértice inferior esquerdo
+        glVertex2f(0.2f, -0.5f); // Vértice superior esquerdo
+        glVertex2f(-0.2f, -0.5f); // Vértice superior direito
+        glVertex2f(-0.2f, -0.6f); // Vértice inferior direito
+        glEnd();
+        glTranslatef(0.0f, -1.3f, -0.1f); // Mover para cima para desenhar o pompom
+        glColor3f(1.0f, 1.0f, 1.0f); // Branco
+        glutSolidSphere(0.05, 100, 100); // Desenhar o pompom do chapéu
         break;
+    case 2:
+        glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
+        // Enable clipping plane to cut the sphere in half
+        eqn[0] = 0.0;
+        eqn[1] = -1.0;
+        eqn[2] = 0.0;
+        eqn[3] = 0.0; // Reset plane equation to clip lower half
+        glClipPlane(GL_CLIP_PLANE0, eqn);
+        glEnable(GL_CLIP_PLANE0);
+        glutSolidSphere(0.5, 100, 100); // Draw half sphere
+        glDisable(GL_CLIP_PLANE0); // Disable clipping plane
+
+             // Definir cores para os círculos interno e externo
+        glColor3f(1.0f, 0.0f, 0.0f); // Cor vermelha para o círculo externo
+        float outerRadius = 0.8f; // Raio do círculo externo
+
+        glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o círculo interno
+        float innerRadius = 0.5f; // Raio do círculo interno
+
+        // Número de segmentos para desenhar os círculos
+        int numSegments = 20;
+
+        // Desenhar o círculo externo
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(0.0f, 0.0f); // Centro do círculo
+        for (int i = 0; i <= numSegments; ++i) {
+            float theta = 4.0f * 3.1415926f * float(i) / float(numSegments);
+            float x = outerRadius * cosf(theta);
+            float y = outerRadius * sinf(theta);
+            glVertex2f(x, y);
+        }
+        glEnd();
+
+        // Desenhar o círculo interno
+        glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(0.0f, 0.0f); // Centro do círculo
+        for (int i = 0; i <= numSegments; ++i) {
+            float theta = 4.0f * 3.1415926f * float(i) / float(numSegments);
+            float x = innerRadius * cosf(theta);
+            float y = innerRadius * sinf(theta);
+            glVertex2f(x, y);
+        }
+        glEnd();
+
+
+
     }
 }
 
@@ -101,7 +165,7 @@ void drawR2D2BodyDetail(GLUquadric* quad) {
     glEnd();
 }
 
-void drawR2D2Body() {    
+void drawR2D2Body() {
     GLUquadric* quad = gluNewQuadric();
     glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 (Azul)
 
@@ -206,7 +270,7 @@ void drawR2D2Body() {
     glEnd();
     glPopMatrix();
     glPopMatrix();
- 
+
     // Desenha detalhe do retangular esquerdo
     glPushMatrix();
     glColor3f(0.5f, 0.5f, 0.5f); // Definindo a cor para cinza
@@ -310,7 +374,7 @@ void display() {
     // Desenhar braço direito
     glPushMatrix();
     glTranslatef(0.8f, 0.6f, -0.9f); // Posição do braço direito
-    drawR2D2Arm(); // Especificar que é o braço direito 
+    drawR2D2Arm(); // Especificar que é o braço direito
     glPopMatrix();
 
     glutSwapBuffers();
@@ -337,7 +401,7 @@ void keyboard(unsigned char key, int x, int y) {
 
 void specialKeyboard(int key, int x, int y) {
     switch (key) {
-        case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3: 
+        case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3:
         case GLUT_KEY_F4: case GLUT_KEY_F5: case GLUT_KEY_F6: // Chapéus: F1...F6
             chapeus = key - GLUT_KEY_F1;
             break;
