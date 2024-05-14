@@ -388,59 +388,87 @@ void drawR2D2Body() {
         break;
     case 1:
 
-    // Define a cor cinza para o retângulo
-    glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza
+        // Define a cor cinza para o retângulo
+        glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza
 
-    // Desenha o retângulo que conecta os braços ao corpo
-    glPushMatrix();
-    glTranslatef(0.0f, 0.4f, 0.0f); // Ajuste a posição conforme necessário
-    glScalef(1.2f, 0.3f, 1.0f); // Ajuste a escala para ser maior no X e menor no Y
-    glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordenadas para um retângulo centralizado
-    glPopMatrix();
+        // Desenha o retângulo que conecta os braços ao corpo
+        glPushMatrix();
+        glTranslatef(0.0f, 0.4f, 0.0f); // Ajuste a posição conforme necessário
+        glScalef(1.2f, 0.3f, 1.0f); // Ajuste a escala para ser maior no X e menor no Y
+        glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordenadas para um retângulo centralizado
+        glPopMatrix();
 
-    glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 Cinza fraco
+        glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 Cinza fraco
 
-    glPushMatrix();
-    glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
-    glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotaciona o cilindro em torno do eixo X
-    gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Desenha o cilindro
-    drawR2D2BodyDetail(quad); // Chama a função para desenhar os detalhes
-    glPopMatrix();
+        glPushMatrix();
+        glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
+        glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotaciona o cilindro em torno do eixo X
+        gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Desenha o cilindro
+        drawR2D2BodyDetail(quad); // Chama a função para desenhar os detalhes
+        glPopMatrix();
 
-    
+        
 
-    glBegin(GL_POLYGON);
-    glColor3f(0.0f, 1.0f, 0.0f); // Cor verde
-    glVertex2f(0.1f, -0.1f); // Topo
-    glVertex2f(0.1f, -0.05f); // Direita
-    glVertex2f(0.51f, -0.44f); // Ponta Direita
-    glVertex2f(-0.5f, 0.57f); // Ponta Esquerda
-    glEnd();
+        glBegin(GL_POLYGON);
+        glColor3f(0.0f, 1.0f, 0.0f); // Cor verde
+        glVertex2f(0.1f, -0.1f); // Topo
+        glVertex2f(0.1f, -0.05f); // Direita
+        glVertex2f(0.51f, -0.44f); // Ponta Direita
+        glVertex2f(-0.5f, 0.57f); // Ponta Esquerda
+        glEnd();
 
-    // Desenha o segundo losango, deslocado para baixo
-    glBegin(GL_POLYGON);
-    glColor3f(1.0f, 0.77f, 0.0f); // Amarelo
-    glVertex2f(0.1f, -0.1f); // 
-    glVertex2f(0.5f, -0.44f); // Ponta Direita
-    glVertex2f(-0.05f, -0.04f); // 
-    glVertex2f(-0.5f, 0.55f); // Ponta Esquerda
-    glEnd();
+        // Desenha o segundo losango, deslocado para baixo
+        glBegin(GL_POLYGON);
+        glColor3f(1.0f, 0.77f, 0.0f); // Amarelo
+        glVertex2f(0.1f, -0.1f); // 
+        glVertex2f(0.5f, -0.44f); // Ponta Direita
+        glVertex2f(-0.05f, -0.04f); // 
+        glVertex2f(-0.5f, 0.55f); // Ponta Esquerda
+        glEnd();
 
-    // Desenha o terceiro losango, deslocado ainda mais para baixo
-    glBegin(GL_POLYGON);
-    glColor3f(0.0f, 1.0f, 0.0f); // Cor verde
-    glVertex2f(0.14f, -0.19f); // Topo
-    glVertex2f(0.5f, -0.45f); // Ponta Direita
-    glVertex2f(0.05f, -0.19f); // Base
-    glVertex2f(-0.5f, 0.54f); // Ponta Esquerda
-    glEnd();
+        // Desenha o terceiro losango, deslocado ainda mais para baixo
+        glBegin(GL_POLYGON);
+        glColor3f(0.0f, 1.0f, 0.0f); // Cor verde
+        glVertex2f(0.14f, -0.19f); // Topo
+        glVertex2f(0.5f, -0.45f); // Ponta Direita
+        glVertex2f(0.05f, -0.19f); // Base
+        glVertex2f(-0.5f, 0.54f); // Ponta Esquerda
+        glEnd();
 
-    drawStarOfDavid(-0.02f, 0.15f, 1.0f);
+        drawStarOfDavid(-0.02f, 0.15f, 1.0f);
+        break;
+    case 2:
+        // Define a cor cinza para o retângulo
+        glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza
 
-    
+        // Desenha o retângulo que conecta os braços ao corpo
+        glPushMatrix();
+        glTranslatef(0.0f, 0.4f, 0.0f); // Ajuste a posição conforme necessário
+        glScalef(1.2f, 0.3f, 1.0f); // Ajuste a escala para ser maior no X e menor no Y
+        glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordenadas para um retângulo centralizado
+        glPopMatrix();
 
-    break;
-}  
+        // Desenha o corpo do R2-D2 como um cilindro
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor preta para o corpo do R2-D2
+
+        glPushMatrix();
+        glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
+        glRotatef(90.0f, 1.0f, 0.0f, 0.0f); // Rotaciona o cilindro em torno do eixo X
+        gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Desenha o cilindro
+        glPopMatrix();
+
+        // Desenha a gravata como um triângulo vermelho de cabeça para baixo
+        glColor3f(1.0f, 0.0f, 0.0f); // Cor vermelha para a gravata
+        glPushMatrix();
+        glTranslatef(0.0f, 0.1f, 0.0f); // Posiciona a gravata no centro do corpo
+        glBegin(GL_TRIANGLES);
+        glVertex3f(0.0f, -0.1f, 0.0f); // Topo do triângulo de cabeça para baixo
+        glVertex3f(-0.05f, 0.35f, 0.0f); // Base esquerda do triângulo de cabeça para baixo
+        glVertex3f(0.05f, 0.35f, 0.0f); // Base direita do triângulo de cabeça para baixo
+        glEnd();
+        glPopMatrix();
+    }   
+
 }
 
 void drawR2D2Arm() {
@@ -557,6 +585,7 @@ int main(int argc, char** argv) {
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(900, 900);
     glutCreateWindow("R2-D2");
+    glClearColor(1.0f, 0.7f, 0.7f, 1.0f);
 
     glMatrixMode(GL_PROJECTION);
     gluPerspective(45.0f, 1.0f, 0.1f, 100.0f);
