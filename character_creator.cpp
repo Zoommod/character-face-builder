@@ -450,6 +450,54 @@ void drawR2D2Arm() {
     gluDeleteQuadric(quad);
 }
 
+
+// Função callback de teclado
+void keyboard(unsigned char key, int x, int y) {
+    char keys[] = {'1', '2', '3', '4', '5', '6', 'a', 's', 'd', 'f', 'g', 'h'};
+    int* indices[] = {&olhos, &olhos, &olhos, &olhos, &olhos, &olhos,
+                      &corpo, &corpo, &corpo, &corpo, &corpo, &corpo};
+
+    for (int i = 0; i < sizeof(keys)/sizeof(char); i++) {
+        if (key == keys[i]) {
+            *indices[i] = i % 6;
+            break;
+        }
+    }
+
+    if (key == 27) { // Tecla ESC para sair
+        exit(0);
+    }
+
+    glutPostRedisplay();
+}
+
+void specialKeyboard(int key, int x, int y) {
+    switch (key) {
+        case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3: 
+        case GLUT_KEY_F4: case GLUT_KEY_F5: case GLUT_KEY_F6: // Chapéus: F1...F6
+            chapeus = key - GLUT_KEY_F1;
+            break;
+        default:
+            break;
+    }
+    glutPostRedisplay();
+}
+
+void displayString(float x, float y, void *font, const char *string) {
+    glColor3f(1.0f, 1.0f, 1.0f); // Define a cor do texto para branco
+    glRasterPos2f(x, y); // Posiciona o texto na tela
+    while (*string) {
+        glutBitmapCharacter(font, *string++);
+    }
+}
+
+void displayControls() {
+    // Escreve as instruções na tela
+    displayString(-1.99f, 1.9f, GLUT_BITMAP_HELVETICA_18, "Corpo: A, S, D, F, G, H");
+    displayString(-1.99f, 1.8f, GLUT_BITMAP_HELVETICA_18, "Olhos: 1, 2, 3, 4, 5, 6");
+    displayString(-1.99f, 1.7f, GLUT_BITMAP_HELVETICA_18, "Chapeu: F1, F2, F3, F4, F5, F6");
+}
+
 void display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -482,39 +530,8 @@ void display() {
     drawR2D2Arm(); // Especificar que é o braço direito 
     glPopMatrix();
 
+    displayControls();
     glutSwapBuffers();
-}
-
-// Função callback de teclado
-void keyboard(unsigned char key, int x, int y) {
-    char keys[] = {'1', '2', '3', '4', '5', '6', 'a', 's', 'd', 'f', 'g', 'h'};
-    int* indices[] = {&olhos, &olhos, &olhos, &olhos, &olhos, &olhos,
-                      &corpo, &corpo, &corpo, &corpo, &corpo, &corpo};
-
-    for (int i = 0; i < sizeof(keys)/sizeof(char); i++) {
-        if (key == keys[i]) {
-            *indices[i] = i % 6;
-            break;
-        }
-    }
-
-    if (key == 27) { // Tecla ESC para sair
-        exit(0);
-    }
-
-    glutPostRedisplay();
-}
-
-void specialKeyboard(int key, int x, int y) {
-    switch (key) {
-        case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3: 
-        case GLUT_KEY_F4: case GLUT_KEY_F5: case GLUT_KEY_F6: // Chapéus: F1...F6
-            chapeus = key - GLUT_KEY_F1;
-            break;
-        default:
-            break;
-    }
-    glutPostRedisplay();
 }
 
 int main(int argc, char** argv) {
