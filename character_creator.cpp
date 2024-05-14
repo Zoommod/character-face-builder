@@ -4,20 +4,41 @@
 const float PI = 3.1416f;
 
 int olhos = 0;
+int chapeus = 0;
 
 // Draw half sphere for the R2-D2's head
 void drawR2D2Head() {
-    glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
-  
-    // Enable clipping plane to cut the sphere in half
-    GLdouble eqn[4] = {0.0, -1.0, 0.0, 0.0}; // Plane equation to clip lower half
-    glClipPlane(GL_CLIP_PLANE0, eqn);
-    glEnable(GL_CLIP_PLANE0);
-  
-    glutSolidSphere(0.5, 100, 100); // Draw half sphere
-  
-    glDisable(GL_CLIP_PLANE0); // Disable clipping plane
+    GLdouble eqn[4];
+    switch (chapeus) {
+    case 0:
+        glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
+        // Enable clipping plane to cut the sphere in half
+        eqn[0] = 0.0;
+        eqn[1] = -1.0;
+        eqn[2] = 0.0;
+        eqn[3] = 0.0; // Plane equation to clip lower half
+        glClipPlane(GL_CLIP_PLANE0, eqn);
+        glEnable(GL_CLIP_PLANE0);
+        glutSolidSphere(0.5, 100, 100); // Draw half sphere
+        glDisable(GL_CLIP_PLANE0); // Disable clipping plane
+        break;
+    case 1:
+        glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
+        // Enable clipping plane to cut the sphere in half
+        eqn[0] = 0.0;
+        eqn[1] = -1.0;
+        eqn[2] = 0.0;
+        eqn[3] = 0.0; // Reset plane equation to clip lower half
+        glClipPlane(GL_CLIP_PLANE0, eqn);
+        glEnable(GL_CLIP_PLANE0);
+        glutSolidSphere(0.5, 100, 100); // Draw half sphere
+        glDisable(GL_CLIP_PLANE0); // Disable clipping plane
+        break;
+    }
 }
+
+
+
 
 void drawR2D2Eye() {
     switch (olhos){
@@ -68,7 +89,6 @@ void drawR2D2Eye() {
         break;
     }
 }
-
 
 void drawR2D2BodyDetail(GLUquadric* quad) {
     // Desenha um painel retangular
@@ -236,7 +256,6 @@ void drawR2D2Body() {
     gluDeleteQuadric(quad);
 }
 
-
 void drawR2D2Arm() {
     GLUquadric* quad = gluNewQuadric();
     glColor3f(0.8f, 0.8f, 0.8f); // Azul
@@ -316,6 +335,18 @@ void keyboard(unsigned char key, int x, int y) {
     glutPostRedisplay();
 }
 
+void specialKeyboard(int key, int x, int y) {
+    switch (key) {
+        case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3: 
+        case GLUT_KEY_F4: case GLUT_KEY_F5: case GLUT_KEY_F6: // Chapéus: F1...F6
+            chapeus = key - GLUT_KEY_F1;
+            break;
+        default:
+            break;
+    }
+    glutPostRedisplay();
+}
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -328,6 +359,7 @@ int main(int argc, char** argv) {
 
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
+    glutSpecialFunc(specialKeyboard);
     glutMainLoop();
     return 0;
 }
