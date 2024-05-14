@@ -187,6 +187,24 @@ void drawR2D2Eye() {
         glEnd();
         glPopMatrix();
         break;
+    case 3:
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor do olho (Preto)
+        glPushMatrix();
+        glTranslatef(-0.05f, 0.78f, 0.4f); // Posição do olho esquerdo em relação à cabeça
+        glutSolidSphere(0.04, 50, 50); // Desenha a esfera do olho esquerdo
+        glTranslatef(0.1f, 0.0f, 0.0f); // Mover para a posição do olho direito
+        glutSolidSphere(0.04, 50, 50); // Desenha a esfera do olho direito
+        glPopMatrix();
+        // Desenha as sobrancelhas irritadas
+        glColor3f(1.0f, 0.5f, 0.0f); // Cor da sobrancelha (Laranja)
+        glLineWidth(3.0f);
+        glBegin(GL_LINES);
+        glVertex3f(-0.1f, 0.9f, 0.41f); // Sobrancelha esquerda (início)
+        glVertex3f(-0.02f, 0.83f, 0.41f); // Sobrancelha esquerda (fim)
+        glVertex3f(0.02f, 0.83f, 0.41f); // Sobrancelha direita (início)
+        glVertex3f(0.1f, 0.9f, 0.41f); // Sobrancelha direita (fim)
+        glEnd();
+        break;
     }
 }
 
