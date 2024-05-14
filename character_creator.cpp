@@ -28,8 +28,47 @@ void drawR2D2Eye() {
         glutSolidSphere(0.08, 50, 50); // Desenha a esfera do olho
         glPopMatrix();
         break;
+    case 1:
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor do olho (Preto)
+        glPushMatrix();
+        glTranslatef(-0.05f, 0.78f, 0.4f); // Posição do olho esquerdo em relação à cabeça
+        glutSolidSphere(0.04, 50, 50); // Desenha a esfera do olho esquerdo
+        glTranslatef(0.1f, 0.0f, 0.0f); // Mover para a posição do olho direito
+        glutSolidSphere(0.04, 50, 50); // Desenha a esfera do olho direito
+        glPopMatrix();
+        // Desenha as sobrancelhas
+        glColor3f(1.0f, 0.5f, 0.0f); // Cor da sobrancelha (Laranja)
+        glLineWidth(3.0f);
+        glBegin(GL_LINES);
+        glVertex3f(-0.1f, 0.82f, 0.41f); // Sobrancelha esquerda
+        glVertex3f(-0.0f, 0.84f, 0.41f);
+        glVertex3f(0.1f, 0.82f, 0.41f); // Sobrancelha direita
+        glVertex3f(0.0f, 0.84f, 0.41f);
+        glEnd();
+        break;
+    case 2:
+        glColor3f(0.0f, 0.0f, 0.0f); // Cor do olho (Preto)
+        glPushMatrix();
+        glTranslatef(0.0f, 0.75f, 0.4f); // Posição do olho em relação à cabeça
+        glutSolidSphere(0.08, 50, 50); // Desenha a esfera do olho
+        glColor3f(1.0f, 1.0f, 1.0f); // Cor da pupila (Branco)
+        glutSolidSphere(0.04, 50, 50); // Desenha a pupila
+        // Desenha os cílios acima do olho
+        glColor3f(0.0f, 0.0f, 0.9f); // Cor dos cílios (Preto)
+        glLineWidth(3.0f);
+        glBegin(GL_LINES);
+        glVertex3f(-0.1f, -0.03f, 0.41f); // Cílio esquerdo
+        glVertex3f(-0.16f, 0.05f, 0.41f);
+        glVertex3f(0.0f, 0.016f, 0.41f); // Cílio do meio
+        glVertex3f(0.0f, 0.088f, 0.41f);
+        glVertex3f(0.1f, -0.03f, 0.41f); // Cílio direito
+        glVertex3f(0.16f, 0.05f, 0.41f);
+        glEnd();
+        glPopMatrix();
+        break;
     }
 }
+
 
 void drawR2D2BodyDetail(GLUquadric* quad) {
     // Desenha um painel retangular
