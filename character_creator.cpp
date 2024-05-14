@@ -48,6 +48,8 @@ void drawStarOfDavid(float centerX, float centerY, float size) {
 
 void drawR2D2Head() {
     GLdouble eqn[4];
+    // Cria nova quadrica
+    GLUquadricObj *quad = gluNewQuadric();
     switch (chapeus) {
     case 0:
         glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
@@ -92,6 +94,8 @@ void drawR2D2Head() {
         glutSolidSphere(0.05, 100, 100); // Desenhar o pompom do chapéu
         break;
     case 2:
+        
+
         glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
         // Enable clipping plane to cut the sphere in half
         eqn[0] = 0.0;
@@ -103,39 +107,49 @@ void drawR2D2Head() {
         glutSolidSphere(0.5, 100, 100); // Draw half sphere
         glDisable(GL_CLIP_PLANE0); // Disable clipping plane
 
-             // Definir cores para os círculos interno e externo
-        glColor3f(1.0f, 0.0f, 0.0f); // Cor vermelha para o círculo externo
-        float outerRadius = 0.8f; // Raio do círculo externo
+        // Desenha o chapéu de cowboy
+        glColor3f(0.5f, 0.35f, 0.05f); // Cor marrom para o chapéu
 
-        glColor3f(0.0f, 0.0f, 1.0f); // Cor azul para o círculo interno
-        float innerRadius = 0.5f; // Raio do círculo interno
+        glPushMatrix();
+        glTranslatef(0.0f, -0.75f, 0.0f); // Mova o chapéu para a posição correta acima da cabeça
+        glRotatef(-90.0f, 1.0f, 0.0f, 0.0f); // Rode o chapéu para que ele esteja orientado corretamente
 
-        // Número de segmentos para desenhar os círculos
-        int numSegments = 20;
+        // Desenhe a parte de cima do chapéu como um cilindro
+        gluCylinder(quad, 0.4f, 0.4f, 0.2f, 30, 30); // Desenha o cilindro
 
-        // Desenhar o círculo externo
-        glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(0.0f, 0.0f); // Centro do círculo
-        for (int i = 0; i <= numSegments; ++i) {
-            float theta = 4.0f * 3.1415926f * float(i) / float(numSegments);
-            float x = outerRadius * cosf(theta);
-            float y = outerRadius * sinf(theta);
-            glVertex2f(x, y);
-        }
-        glEnd();
+        // Desenhe o aro do chapéu como um toroide
+        glutSolidTorus(0.04f, 0.5f, 20, 20); // Desenha o aro
+        glPopMatrix();
 
-        // Desenhar o círculo interno
-        glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(0.0f, 0.0f); // Centro do círculo
-        for (int i = 0; i <= numSegments; ++i) {
-            float theta = 4.0f * 3.1415926f * float(i) / float(numSegments);
-            float x = innerRadius * cosf(theta);
-            float y = innerRadius * sinf(theta);
-            glVertex2f(x, y);
-        }
-        glEnd();
+        glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
 
+        gluDeleteQuadric(quad);
+        break;
+    case 3:
+        glColor3f(0.99f, 0.99f, 0.99f); // Cor da cabeça do R2-D2 (Cinza claro)
+        // Enable clipping plane to cut the sphere in half
+        eqn[0] = 0.0;
+        eqn[1] = -1.0;
+        eqn[2] = 0.0;
+        eqn[3] = 0.0; // Reset plane equation to clip lower half
+        glClipPlane(GL_CLIP_PLANE0, eqn);
+        glEnable(GL_CLIP_PLANE0);
+        glutSolidSphere(0.5, 100, 100); // Draw half sphere
+        glDisable(GL_CLIP_PLANE0); // Disable clipping plane
 
+        // Define a cor da aureola como dourada
+        glColor3f(1.0f, 0.843f, 0.0f);
+
+        glPushMatrix();
+        // Posição da aureola
+        glTranslatef(0.0f, -0.7f, 0.0f);
+        
+        // Rotação para que a aureola fique paralela ao chão
+        glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        // Utilize a função glutSolidTorus para desenhar a aureola
+        glutSolidTorus(0.02f, 0.3f, 20, 20);
+        glPopMatrix();
+        break;
 
     }
 }
@@ -467,6 +481,8 @@ void drawR2D2Body() {
         glVertex3f(0.05f, 0.35f, 0.0f); // Base direita do triângulo de cabeça para baixo
         glEnd();
         glPopMatrix();
+
+        break;
     }   
 
 }
@@ -499,13 +515,19 @@ void drawR2D2Arm() {
 
 // Função callback de teclado
 void keyboard(unsigned char key, int x, int y) {
-    char keys[] = {'1', '2', '3', '4', '5', '6', 'a', 's', 'd', 'f', 'g', 'h'};
-    int* indices[] = {&olhos, &olhos, &olhos, &olhos, &olhos, &olhos,
-                      &corpo, &corpo, &corpo, &corpo, &corpo, &corpo};
+    char keys[] = {'1', '2', '3', '4', 'a', 's', 'd'};
+    int* indices[] = {&olhos, &olhos, &olhos, &olhos,
+                      &corpo, &corpo, &corpo};
 
     for (int i = 0; i < sizeof(keys)/sizeof(char); i++) {
         if (key == keys[i]) {
-            *indices[i] = i % 6;
+            if(i < 4) { // Se for 1, 2, 3 ou 4, atualiza 'olhos'
+                *indices[i] = i % 4;
+            } else { // Se for 'a', 's', 'd', 'f', 'g', 'h', atualiza 'corpo'
+                // Aqui você pode definir um valor específico para cada tecla
+                // que corresponde a um dos casos de 'corpo'
+                *indices[i] = (i - 4) % 3; // Isso dará valores de 0 a 2
+            }
             break;
         }
     }
@@ -517,10 +539,12 @@ void keyboard(unsigned char key, int x, int y) {
     glutPostRedisplay();
 }
 
+
+
 void specialKeyboard(int key, int x, int y) {
     switch (key) {
         case GLUT_KEY_F1: case GLUT_KEY_F2: case GLUT_KEY_F3: 
-        case GLUT_KEY_F4: case GLUT_KEY_F5: case GLUT_KEY_F6: // Chapéus: F1...F6
+        case GLUT_KEY_F4:  // Chapéus: F1...F4
             chapeus = key - GLUT_KEY_F1;
             break;
         default:
