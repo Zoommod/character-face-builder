@@ -46,9 +46,6 @@ void drawStarOfDavid(float centerX, float centerY, float size) {
     glPopMatrix(); // Restaura a matriz de transformação anterior
 }
 
-
-
-// Draw half sphere for the R2-D2's head
 void drawR2D2Head() {
     GLdouble eqn[4];
     switch (chapeus) {
@@ -143,7 +140,6 @@ void drawR2D2Head() {
     }
 }
 
-
 void drawR2D2Eye() {
     switch (olhos){
     case 0:
@@ -209,7 +205,18 @@ void drawR2D2Body() {
     GLUquadric* quad = gluNewQuadric();
     switch (corpo){
     case 0:
-        glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 (Azul)
+
+        // Define a cor cinza para o retângulo
+        glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza
+
+        // Desenha o retângulo que conecta os braços ao corpo
+        glPushMatrix();
+        glTranslatef(0.0f, 0.4f, 0.0f); // Ajuste a posição conforme necessário
+        glScalef(1.2f, 0.3f, 1.0f); // Ajuste a escala para ser maior no X e menor no Y
+        glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordenadas para um retângulo centralizado
+        glPopMatrix();
+
+        glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 Cinza fraco
 
         glPushMatrix();
         glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
@@ -362,7 +369,18 @@ void drawR2D2Body() {
         gluDeleteQuadric(quad);
         break;
     case 1:
-    glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 (Azul)
+
+    // Define a cor cinza para o retângulo
+    glColor3f(0.5f, 0.5f, 0.5f); // Cor cinza
+
+    // Desenha o retângulo que conecta os braços ao corpo
+    glPushMatrix();
+    glTranslatef(0.0f, 0.4f, 0.0f); // Ajuste a posição conforme necessário
+    glScalef(1.2f, 0.3f, 1.0f); // Ajuste a escala para ser maior no X e menor no Y
+    glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordenadas para um retângulo centralizado
+    glPopMatrix();
+
+    glColor3f(0.8f, 0.8f, 0.8f); // Cor do corpo do R2-D2 Cinza fraco
 
     glPushMatrix();
     glTranslatef(0.0f, 0.55f, 0.0f); // Posiciona o cilindro na parte inferior da cabeça
@@ -370,6 +388,8 @@ void drawR2D2Body() {
     gluCylinder(quad, 0.5f, 0.5f, 1.0f, 50, 50); // Desenha o cilindro
     drawR2D2BodyDetail(quad); // Chama a função para desenhar os detalhes
     glPopMatrix();
+
+    
 
     glBegin(GL_POLYGON);
     glColor3f(0.0f, 1.0f, 0.0f); // Cor verde
@@ -405,11 +425,9 @@ void drawR2D2Body() {
 }  
 }
 
-
-
 void drawR2D2Arm() {
     GLUquadric* quad = gluNewQuadric();
-    glColor3f(0.8f, 0.8f, 0.8f); // Azul
+    glColor3f(0.5f, 0.5f, 0.5f); // Cinza
 
     // Desenha o braço
     glPushMatrix();
