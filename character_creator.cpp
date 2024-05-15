@@ -10,7 +10,6 @@ int body = 0;
 void drawEquilateralTriangle(float centerX, float centerY, float size, bool inverted)
 {
     float height = size * sqrt(3) / 2; // Height of the equilateral triangle
-    // Set the color of the star (RGB)
     glColor3f(1.0, 1.0, 0.0); // Yellow
     glBegin(GL_TRIANGLES);
     if (!inverted)
@@ -34,7 +33,7 @@ void drawStarOfDavid(float centerX, float centerY, float size)
     size = size / 7; // Reduce the size by half
 
     // Adjust the value of 'centerY' to shift the star downwards
-    centerY -= size; // Shifts the star down by the value of 'size'
+    centerY -= size;
 
     // Draw the triangle with the tip upwards
     drawEquilateralTriangle(centerX, centerY, size, false);
@@ -45,7 +44,7 @@ void drawStarOfDavid(float centerX, float centerY, float size)
     // Draw the sphere in the center of the star
     glPushMatrix();                    // Save the current transformation matrix
     glTranslatef(centerX, centerY, 0); // Move the center of the sphere to the center of the star
-    // Set the color of the sphere (RGB)
+    
     glColor3f(1.0, 0.0, 0.0);          // Red
     glutSolidSphere(size / 3, 20, 20); // Draw the sphere with a third of the size of the star
     glPopMatrix();                     // Restore the previous transformation matrix
@@ -53,7 +52,7 @@ void drawStarOfDavid(float centerX, float centerY, float size)
 
 void drawSantaHat()
 {
-    // Draw Santa's hat
+    
     glColor3f(1.0f, 0.0f, 0.0f); // Red color
     glBegin(GL_TRIANGLES);
     glVertex2f(0.0f, -1.2f);  // Lower vertex
@@ -72,20 +71,18 @@ void drawSantaHat()
     glutSolidSphere(0.05, 100, 100);  // Draw the pom-pom of the hat
 }
 
-void drawCowboyHat(GLUquadricObj *quad)
-{
-    // Draw the cowboy hat
-    glColor3f(0.5f, 0.35f, 0.05f); // Brown color for the hat
+void drawCowboyHat(GLUquadricObj *quad){
+    glColor3f(0.5f, 0.35f, 0.05f); // Brown color
 
     glPushMatrix();
     glTranslatef(0.0f, -0.75f, 0.0f);    // Move the hat to the correct position above the head
     glRotatef(-90.0f, 1.0f, 0.0f, 0.0f); // Rotate the hat so it is oriented correctly
 
     // Draw the top part of the hat as a cylinder
-    gluCylinder(quad, 0.4f, 0.4f, 0.2f, 30, 30); // Draw the cylinder
+    gluCylinder(quad, 0.4f, 0.4f, 0.2f, 30, 30);
 
     // Draw the brim of the hat as a toroid
-    glutSolidTorus(0.04f, 0.5f, 20, 20); // Draw the brim
+    glutSolidTorus(0.04f, 0.5f, 20, 20);
     glPopMatrix();
 
     glColor3f(0.99f, 0.99f, 0.99f); // Color of R2-D2's head (Light gray)
@@ -111,7 +108,6 @@ void drawHalo()
 void drawHead()
 {
     GLdouble eqn[4];
-    // Create a new quadric
     GLUquadricObj *quad = gluNewQuadric();
     glColor3f(0.99f, 0.99f, 0.99f); // Color of R2-D2's head (Light gray)
     // Enable clipping plane to cut the sphere in half
@@ -130,15 +126,12 @@ void drawHead()
         // No hat is drawn
         break;
     case 1:
-        // Draw the first style of hat
         drawSantaHat();
         break;
     case 2:
-        // Draw the second style of hat
         drawCowboyHat(quad);
         break;
     case 3:
-        // Draw the third style of hat
         drawHalo();
         break;
     }
@@ -182,6 +175,7 @@ void drawEyeStyleThree()
     glutSolidSphere(0.08, 50, 50);   // Draw the eye sphere
     glColor3f(1.0f, 1.0f, 1.0f);     // Pupil color (White)
     glutSolidSphere(0.04, 50, 50);   // Draw the pupil
+
     // Draw the eyelashes above the eye
     glColor3f(0.0f, 0.0f, 0.9f); // Eyelash color (Black)
     glLineWidth(3.0f);
@@ -196,8 +190,7 @@ void drawEyeStyleThree()
     glPopMatrix();
 }
 
-void drawEyeStyleFour()
-{
+void drawEyeStyleFour(){
     glColor3f(0.0f, 0.0f, 0.0f); // Eye color (Black)
     glPushMatrix();
     glTranslatef(-0.05f, 0.78f, 0.4f); // Left eye position in relation to the head
@@ -205,6 +198,7 @@ void drawEyeStyleFour()
     glTranslatef(0.1f, 0.0f, 0.0f);    // Move to the right eye position
     glutSolidSphere(0.04, 50, 50);     // Draw the right eye sphere
     glPopMatrix();
+
     // Draw the angry eyebrows
     glColor3f(1.0f, 0.5f, 0.0f); // Eyebrow color (Orange)
     glLineWidth(3.0f);
@@ -271,10 +265,10 @@ void drawBodyStyleOne(GLUquadric *quad)
     glPushMatrix();
     glColor3f(0.0f, 0.0f, 1.0f); // Blue color for rectangle
     glBegin(GL_QUADS);
-    glVertex3f(-0.2f, 0.4f, 0.0f);  // Bottom left corner (adjusted downwards)
-    glVertex3f(0.2f, 0.4f, 0.0f);   // Bottom right corner (adjusted downwards)
-    glVertex3f(0.2f, 0.44f, 0.0f);  // Top right corner (adjusted downwards)
-    glVertex3f(-0.2f, 0.44f, 0.0f); // Top left corner (adjusted downwards)
+    glVertex3f(-0.2f, 0.4f, 0.0f);  // Bottom left corner
+    glVertex3f(0.2f, 0.4f, 0.0f);   // Bottom right corner
+    glVertex3f(0.2f, 0.44f, 0.0f);  // Top right corner
+    glVertex3f(-0.2f, 0.44f, 0.0f); // Top left corner
     glEnd();
 
     // Draw the diamond at the right tip of the rectangle
@@ -299,13 +293,13 @@ void drawBodyStyleOne(GLUquadric *quad)
     glPopMatrix();
 
     glPushMatrix();
-    // Draw the lower circle and tic-tac-toe lines
+    // Draw the lower circle and "tic-tac-toe" lines
     glPushMatrix();
     glColor3f(0.5f, 0.5f, 0.5f);      // Gray color for circles
     glTranslatef(0.0f, -0.1f, 0.0f);  // Position the lower circle
     gluDisk(quad, 0.0f, 0.1f, 30, 1); // Draw the lower circle
 
-    // Tic-tac-toe lines centered for the lower circle
+    // "Tic-tac-toe" lines centered for the lower circle
     glColor3f(0.0f, 0.0f, 1.0f); // Blue color for lines
     glBegin(GL_LINES);
     glVertex3f(-0.05f, 0.0f, 0.01f); // Bottom horizontal line
@@ -320,13 +314,13 @@ void drawBodyStyleOne(GLUquadric *quad)
     glEnd();
 
     glPopMatrix();
-    // Draw the upper circle and tic-tac-toe lines
+    // Draw the upper circle and "tic-tac-toe" lines
     glPushMatrix();
     glColor3f(0.5f, 0.5f, 0.5f);      // Gray color for circles
     glTranslatef(0.0f, 0.15f, 0.0f);  // Position the upper circle
     gluDisk(quad, 0.0f, 0.1f, 30, 1); // Draw the upper circle
 
-    // Tic-tac-toe lines centered for the upper circle
+    // "Tic-tac-toe" lines centered for the upper circle
     glColor3f(0.0f, 0.0f, 1.0f); // Blue color for lines
     glBegin(GL_LINES);
     glVertex3f(-0.05f, 0.0f, 0.01f); // Bottom horizontal line
@@ -440,17 +434,16 @@ void drawBodyStyleThree(GLUquadric *quad)
     glPopMatrix();
 }
 
-void drawBody()
-{
+void drawBody(){
     GLUquadric *quad = gluNewQuadric();
     // Set the color to gray for the rectangle
     glColor3f(0.5f, 0.5f, 0.5f); // Gray color
 
     // Draw the rectangle that connects the arms to the body
     glPushMatrix();
-    glTranslatef(0.0f, 0.4f, 0.0f);    // Adjust the position as necessary
+    glTranslatef(0.0f, 0.4f, 0.0f); 
     glScalef(1.2f, 0.3f, 1.0f);        // Adjust the scale to be larger in X and smaller in Y
-    glRectf(-0.5f, -0.1f, 0.5f, 0.1f); // Coordinates for a centered rectangle
+    glRectf(-0.5f, -0.1f, 0.5f, 0.1f);
     glPopMatrix();
     glColor3f(0.8f, 0.8f, 0.8f); // Light gray color for the R2-D2 body
     glPushMatrix();
@@ -473,8 +466,7 @@ void drawBody()
     }
 }
 
-void drawArm()
-{
+void drawArm(){
     GLUquadric *quad = gluNewQuadric();
     glColor3f(0.5f, 0.5f, 0.5f); // Gray
 
