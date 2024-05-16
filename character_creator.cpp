@@ -71,24 +71,28 @@ void drawSantaHat()
     glutSolidSphere(0.05, 100, 100);  // Draw the pom-pom of the hat
 }
 
-void drawCowboyHat(GLUquadricObj *quad){
+void drawCowboyHat(GLUquadricObj *quad) {
     glColor3f(0.5f, 0.35f, 0.05f); // Brown color
 
     glPushMatrix();
-    glTranslatef(0.0f, -0.75f, 0.0f);    // Move the hat to the correct position above the head
+    glTranslatef(0.0f, -0.7f, 0.0f);    // Move the hat to the correct position above the head
     glRotatef(-90.0f, 1.0f, 0.0f, 0.0f); // Rotate the hat so it is oriented correctly
 
     // Draw the top part of the hat as a cylinder
     gluCylinder(quad, 0.4f, 0.4f, 0.2f, 30, 30);
 
-    // Draw the brim of the hat as a toroid
-    glutSolidTorus(0.04f, 0.5f, 20, 20);
+    // Draw the brim of the hat as a disk
+    glTranslatef(0.0f, 0.0f, 0.2f); // Move to the end of the cylinder
+    glPushMatrix();
+    glScalef(1.0f, 1.0f, 0.1f); // Flatten the torus to make it more like a brim
+    glutSolidTorus(0.04f, 0.5f, 30, 30);
     glPopMatrix();
 
-    glColor3f(0.99f, 0.99f, 0.99f); // Color of R2-D2's head (Light gray)
+    glPopMatrix();
 
-    gluDeleteQuadric(quad);
+    gluDeleteQuadric(quad); // Delete the quadric object when done
 }
+
 
 void drawHalo()
 {
